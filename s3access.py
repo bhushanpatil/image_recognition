@@ -1,10 +1,38 @@
 import boto3
 import json
 import csv
+import os
+from PIL import Image
+
+
+def rotateAndFindText(s3,s3file):
+    filename = os.path.basename(s3file)
+    s3.download_file(bucket, s3file,Filename=filename)
+    img = Image.open(filename)
+    img = img.rotate(90)
+    img.save(filename)
+
+
+    s3.upload_file(filename, bucket, 'rotated/'+filename)
+
+    response = rekognition.detect_text(
+            Image={
+                    "S3Object": {
+                    "Bucket": bucket,
+                    "Name": 'rotated/'+filename,
+                    }
+                }
+    )
+
+    s3.delete_object(Bucket=bucket, Key='rotated/'+filename)
+    os.remove(filename)
+    img.close()
+    return response
+
 
 session = boto3.Session(
-    aws_access_key_id='',
-    aws_secret_access_key='',
+    aws_access_key_id='AKIAI7U6NZJZEWIOJ66A',
+    aws_secret_access_key='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',
     #aws_session_token=SESSION_TOKEN,
 )
 
@@ -102,7 +130,13 @@ for object in s3.list_objects(Bucket=bucket,Prefix=bucket_path)['Contents']:
         if len(response['TextDetections'])>0:  
             #print("Text Detected")
             tempDict['text_detected'] = "Yes"
-        #print(json.dumps(response,indent=2))
+            #print(json.dumps(response,indent=2))
+
+        if tempDict['text_detected'] != "Yes":
+            response = rotateAndFindText(s3,object['Key'])
+            if len(response['TextDetections'])>0:  
+                #print("Text Detected")
+                tempDict['text_detected'] = "Yes"
 
 
         response = rekognition.detect_moderation_labels(
