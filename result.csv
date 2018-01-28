@@ -1,0 +1,5 @@
+filename,label,isgroup,Age_min,Age_max,Gender_Confidence,Gender,isCelebrity,Celebrity_Name,Celebrity_MatchConfidence,text_detected,moderation_label_found,moderation_label
+photos/2018/60210392.jpg,Human|People|Person|Face|Portrait|Smile,No,26,43,99.92152404785156,Male,Yes,Arjun Kapoor,100.0,No,,
+photos/2018/IMG_3410.JPG,Human|People|Person|Beach|Coast|Nature|Ocean|Outdoors|Sea|Water|Bikini|Clothing|Swimwear,Yes,16,27,99.9254379272461,Male,No,,,No,,
+photos/2018/priyanka-chopra-shows-off-her-bikini-body-beach-in-miami-fl-05-15-2017-1_thumbnail.jpg,Human|People|Person|Bikini|Clothing|Swimwear,No,20,38,100.0,Female,No,,,No,Yes,|Suggestive:99.12472534179688|Female Swimwear Or Underwear:99.12472534179688
+photos/2018/rajdhani-rasovara-launch-15.jpg,Human|People|Person,No,26,43,100.0,Female,Yes,Aanchal Kumar,100.0,Yes,,
